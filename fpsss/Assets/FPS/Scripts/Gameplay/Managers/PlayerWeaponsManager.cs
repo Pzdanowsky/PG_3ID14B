@@ -19,7 +19,8 @@ namespace Unity.FPS.Gameplay
         [Tooltip("List of weapon the player will start with")]
         public List<WeaponController> StartingWeapons = new List<WeaponController>();
 
-        [Header("References")] [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
+        [Header("References")] 
+        [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
         public Camera WeaponCamera;
 
         [Tooltip("Parent transform where all weapon will be added in the hierarchy")]
