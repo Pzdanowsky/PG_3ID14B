@@ -16,10 +16,35 @@ namespace Unity.FPS.Gameplay
             PutUpNew,
         }
 
-        [Tooltip("List of weapon the player will start with")]
-        public List<WeaponController> StartingWeapons = new List<WeaponController>();
+        // dostepne klasy gracza
+        public enum PlayerClasses
+        {
+            Dawid,
+            Kamil,
+            Wiktoria,
+            DrInzLukawski,
+            MgrInzPieta,
+            MgrInzSydoryk,
+        }
 
-        [Header("References")] [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
+        // aktualnie wybrana klasa gracza
+        [Tooltip("The selected class of the player's character")]
+        public PlayerClasses playerClass;
+
+        // Poczatkowe bronie dla kazdej z klas
+
+        public List<WeaponController> StartingWeaponsDawid = new List<WeaponController>();
+        public List<WeaponController> StartingWeaponsKamil = new List<WeaponController>();
+        public List<WeaponController> StartingWeaponsWiktoria = new List<WeaponController>();
+        public List<WeaponController> StartingWeaponsDrInzLukawski = new List<WeaponController>();
+        public List<WeaponController> StartingWeaponsMgrInzPieta = new List<WeaponController>();
+        public List<WeaponController> StartingWeaponsMgrInzSydoryk = new List<WeaponController>();
+
+        [Tooltip("List of weapon the player will start with")]
+        private List<WeaponController> StartingWeapons = new List<WeaponController>();
+
+        [Header("References")]
+        [Tooltip("Secondary camera used to avoid seeing weapon go throw geometries")]
         public Camera WeaponCamera;
 
         [Tooltip("Parent transform where all weapon will be added in the hierarchy")]
@@ -57,7 +82,8 @@ namespace Unity.FPS.Gameplay
         [Tooltip("How fast the weapon goes back to it's original position after the recoil is finished")]
         public float RecoilRestitutionSharpness = 10f;
 
-        [Header("Misc")] [Tooltip("Speed at which the aiming animatoin is played")]
+        [Header("Misc")]
+        [Tooltip("Speed at which the aiming animatoin is played")]
         public float AimingAnimationSpeed = 10f;
 
         [Tooltip("Field of view when not aiming")]
@@ -80,21 +106,22 @@ namespace Unity.FPS.Gameplay
         public UnityAction<WeaponController, int> OnAddedWeapon;
         public UnityAction<WeaponController, int> OnRemovedWeapon;
 
-        WeaponController[] m_WeaponSlots = new WeaponController[9]; // 9 available weapon slots
-        PlayerInputHandler m_InputHandler;
-        PlayerCharacterController m_PlayerCharacterController;
-        float m_WeaponBobFactor;
-        Vector3 m_LastCharacterPosition;
-        Vector3 m_WeaponMainLocalPosition;
-        Vector3 m_WeaponBobLocalPosition;
-        Vector3 m_WeaponRecoilLocalPosition;
-        Vector3 m_AccumulatedRecoil;
-        float m_TimeStartedWeaponSwitch;
-        WeaponSwitchState m_WeaponSwitchState;
-        int m_WeaponSwitchNewWeaponIndex;
+        private WeaponController[] m_WeaponSlots = new WeaponController[9]; // 9 available weapon slots
+        private PlayerInputHandler m_InputHandler;
+        private PlayerCharacterController m_PlayerCharacterController;
+        private float m_WeaponBobFactor;
+        private Vector3 m_LastCharacterPosition;
+        private Vector3 m_WeaponMainLocalPosition;
+        private Vector3 m_WeaponBobLocalPosition;
+        private Vector3 m_WeaponRecoilLocalPosition;
+        private Vector3 m_AccumulatedRecoil;
+        private float m_TimeStartedWeaponSwitch;
+        private WeaponSwitchState m_WeaponSwitchState;
+        private int m_WeaponSwitchNewWeaponIndex;
 
-        void Start()
+        private void Start()
         {
+            UpdatePlayerWeapons();
             ActiveWeaponIndex = -1;
             m_WeaponSwitchState = WeaponSwitchState.Down;
 
@@ -105,7 +132,6 @@ namespace Unity.FPS.Gameplay
             m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerWeaponsManager>(
                 m_PlayerCharacterController, this, gameObject);
-
             SetFov(DefaultFov);
 
             OnSwitchedToWeapon += OnWeaponSwitched;
@@ -119,7 +145,7 @@ namespace Unity.FPS.Gameplay
             SwitchWeapon(true);
         }
 
-        void Update()
+        private void Update()
         {
             // shoot handling
             WeaponController activeWeapon = GetActiveWeapon();
@@ -189,9 +215,8 @@ namespace Unity.FPS.Gameplay
             }
         }
 
-
         // Update various animated features in LateUpdate because it needs to override the animated arm position
-        void LateUpdate()
+        private void LateUpdate()
         {
             UpdateWeaponAiming();
             UpdateWeaponBob();
@@ -281,7 +306,7 @@ namespace Unity.FPS.Gameplay
         }
 
         // Updates weapon position and camera FoV for the aiming transition
-        void UpdateWeaponAiming()
+        private void UpdateWeaponAiming()
         {
             if (m_WeaponSwitchState == WeaponSwitchState.Up)
             {
@@ -305,7 +330,7 @@ namespace Unity.FPS.Gameplay
         }
 
         // Updates the weapon bob animation based on character speed
-        void UpdateWeaponBob()
+        private void UpdateWeaponBob()
         {
             if (Time.deltaTime > 0f)
             {
@@ -341,7 +366,7 @@ namespace Unity.FPS.Gameplay
         }
 
         // Updates the weapon recoil animation
-        void UpdateWeaponRecoil()
+        private void UpdateWeaponRecoil()
         {
             // if the accumulated recoil is further away from the current position, make the current position move towards the recoil target
             if (m_WeaponRecoilLocalPosition.z >= m_AccumulatedRecoil.z * 0.99f)
@@ -359,7 +384,7 @@ namespace Unity.FPS.Gameplay
         }
 
         // Updates the animated transition of switching weapons
-        void UpdateWeaponSwitching()
+        private void UpdateWeaponSwitching()
         {
             // Calculate the time ratio (0 to 1) since weapon switch was triggered
             float switchingTimeFactor = 0f;
@@ -528,7 +553,7 @@ namespace Unity.FPS.Gameplay
 
         // Calculates the "distance" between two weapon slot indexes
         // For example: if we had 5 weapon slots, the distance between slots #2 and #4 would be 2 in ascending order, and 3 in descending order
-        int GetDistanceBetweenWeaponSlots(int fromSlotIndex, int toSlotIndex, bool ascendingOrder)
+        private int GetDistanceBetweenWeaponSlots(int fromSlotIndex, int toSlotIndex, bool ascendingOrder)
         {
             int distanceBetweenSlots = 0;
 
@@ -549,11 +574,42 @@ namespace Unity.FPS.Gameplay
             return distanceBetweenSlots;
         }
 
-        void OnWeaponSwitched(WeaponController newWeapon)
+        private void OnWeaponSwitched(WeaponController newWeapon)
         {
             if (newWeapon != null)
             {
                 newWeapon.ShowWeapon(true);
+            }
+        }
+
+        // zmiana broni gracza dla odpowiedniej klasy
+        private void UpdatePlayerWeapons()
+        {
+            switch (playerClass)
+            {
+                case PlayerClasses.Dawid:
+                    StartingWeapons = StartingWeaponsDawid;
+                    break;
+
+                case PlayerClasses.Kamil:
+                    StartingWeapons = StartingWeaponsKamil;
+                    break;
+
+                case PlayerClasses.Wiktoria:
+                    StartingWeapons = StartingWeaponsWiktoria;
+                    break;
+
+                case PlayerClasses.DrInzLukawski:
+                    StartingWeapons = StartingWeaponsDrInzLukawski;
+                    break;
+
+                case PlayerClasses.MgrInzPieta:
+                    StartingWeapons = StartingWeaponsMgrInzPieta;
+                    break;
+
+                case PlayerClasses.MgrInzSydoryk:
+                    StartingWeapons = StartingWeaponsMgrInzSydoryk;
+                    break;
             }
         }
     }
