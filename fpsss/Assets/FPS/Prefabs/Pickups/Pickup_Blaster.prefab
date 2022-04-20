@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5391986374566301940}
   m_Layer: 0
   m_Name: Pickup_Blaster
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +81,7 @@ MonoBehaviour:
   PickupSfx: {fileID: 8300000, guid: 7b83d61917ac1224f942a0609b1221f2, type: 3}
   PickupVfxPrefab: {fileID: 0}
   WeaponPrefab: {fileID: 4512789211320788747}
+  reactivateTime: 5
 --- !u!1 &7696458092355651969
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.19699955
       objectReference: {fileID: 0}
@@ -161,6 +167,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.85868055
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.23189516
       objectReference: {fileID: 0}
@@ -173,16 +184,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.40159613
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.85868055
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: b318fabc73446b746a1005cede0c4ceb,
         type: 3}

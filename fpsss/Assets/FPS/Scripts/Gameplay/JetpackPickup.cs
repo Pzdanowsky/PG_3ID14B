@@ -1,7 +1,12 @@
-﻿namespace Unity.FPS.Gameplay
+﻿using UnityEngine;
+
+namespace Unity.FPS.Gameplay
 {
     public class JetpackPickup : Pickup
     {
+        [Tooltip("Time after which pickup will be reactivated (in seconds)")]
+        public float reactivateTime;
+
         protected override void OnPicked(PlayerCharacterController byPlayer)
         {
             var jetpack = byPlayer.GetComponent<Jetpack>();
@@ -11,7 +16,8 @@
             if (jetpack.TryUnlock())
             {
                 PlayPickupFeedback();
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                Invoke("reactivePickup", reactivateTime);
             }
         }
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5391986374566301940}
   m_Layer: 0
   m_Name: Pickup_Shotgun
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,6 +82,7 @@ MonoBehaviour:
   PickupVfxPrefab: {fileID: 0}
   WeaponPrefab: {fileID: 8323776800172828795, guid: 31d97e822763d1f4cb769f7e3f7f7333,
     type: 3}
+  reactivateTime: 5
 --- !u!1 &7810732725597439403
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +138,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.197
       objectReference: {fileID: 0}
@@ -152,6 +158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.85868055
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.23189516
       objectReference: {fileID: 0}
@@ -164,16 +175,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.40159613
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.85868055
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 31d97e822763d1f4cb769f7e3f7f7333,
         type: 3}

@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 7671270577186476435}
   m_Layer: 0
   m_Name: Pickup_Launcher
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +113,7 @@ MonoBehaviour:
   PickupVfxPrefab: {fileID: 0}
   WeaponPrefab: {fileID: 8323776800172828795, guid: 3439b4874b7b44e4eb2216314c46b85c,
     type: 3}
+  reactivateTime: 5
 --- !u!1001 &4626462719145872102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,6 +124,11 @@ PrefabInstance:
     - target: {fileID: 925616046268229668, guid: 3439b4874b7b44e4eb2216314c46b85c,
         type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
+        type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
@@ -142,6 +148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9488854
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.21411245
       objectReference: {fileID: 0}
@@ -154,16 +165,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.120336354
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9488854
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2225486910712267856, guid: 3439b4874b7b44e4eb2216314c46b85c,
         type: 3}

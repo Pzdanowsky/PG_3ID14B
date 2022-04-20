@@ -5,8 +5,12 @@ namespace Unity.FPS.Gameplay
 {
     public class HealthPickup : Pickup
     {
-        [Header("Parameters")] [Tooltip("Amount of health to heal on pickup")]
+        [Header("Parameters")]
+        [Tooltip("Amount of health to heal on pickup")]
         public float HealAmount;
+
+        [Tooltip("Time after which pickup will be reactivated (in seconds)")]
+        public float reactivateTime;
 
         protected override void OnPicked(PlayerCharacterController player)
         {
@@ -15,7 +19,8 @@ namespace Unity.FPS.Gameplay
             {
                 playerHealth.Heal(HealAmount);
                 PlayPickupFeedback();
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                Invoke("reactivePickup", reactivateTime);
             }
         }
     }

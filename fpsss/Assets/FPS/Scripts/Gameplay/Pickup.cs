@@ -19,9 +19,9 @@ namespace Unity.FPS.Gameplay
 
         public Rigidbody PickupRigidbody { get; private set; }
 
-        Collider m_Collider;
-        Vector3 m_StartPosition;
-        bool m_HasPlayedFeedback;
+        private Collider m_Collider;
+        private Vector3 m_StartPosition;
+        private bool m_HasPlayedFeedback;
 
         protected virtual void Start()
         {
@@ -38,7 +38,7 @@ namespace Unity.FPS.Gameplay
             m_StartPosition = transform.position;
         }
 
-        void Update()
+        private void Update()
         {
             // Handle bobbing
             float bobbingAnimationPhase = ((Mathf.Sin(Time.time * VerticalBobFrequency) * 0.5f) + 0.5f) * BobbingAmount;
@@ -48,7 +48,7 @@ namespace Unity.FPS.Gameplay
             transform.Rotate(Vector3.up, RotatingSpeed * Time.deltaTime, Space.Self);
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             PlayerCharacterController pickingPlayer = other.GetComponent<PlayerCharacterController>();
 
@@ -83,6 +83,12 @@ namespace Unity.FPS.Gameplay
             }
 
             m_HasPlayedFeedback = true;
+        }
+
+        public void reactivePickup()
+        {
+            if (gameObject.tag == "Pickup")
+                gameObject.SetActive(true);
         }
     }
 }

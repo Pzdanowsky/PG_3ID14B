@@ -8,6 +8,9 @@ namespace Unity.FPS.Gameplay
         [Tooltip("The prefab for the weapon that will be added to the player on pickup")]
         public WeaponController WeaponPrefab;
 
+        [Tooltip("Time after which pickup will be reactivated (in seconds)")]
+        public float reactivateTime;
+
         protected override void Start()
         {
             base.Start();
@@ -34,7 +37,8 @@ namespace Unity.FPS.Gameplay
                     }
 
                     PlayPickupFeedback();
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
+                    Invoke("reactivePickup", reactivateTime);
                 }
             }
         }
