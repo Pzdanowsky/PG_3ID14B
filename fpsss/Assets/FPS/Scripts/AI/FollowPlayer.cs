@@ -24,7 +24,10 @@ namespace Unity.FPS.AI
 
         void LateUpdate()
         {
-            transform.position = m_PlayerTransform.position + m_OriginalOffset;
+            if(m_PlayerTransform != null){
+                transform.position = m_PlayerTransform.position + m_OriginalOffset;
+            }
+            
         }
     }
 }

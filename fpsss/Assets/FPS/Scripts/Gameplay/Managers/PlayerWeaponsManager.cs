@@ -3,11 +3,13 @@ using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 namespace Unity.FPS.Gameplay
 {
     [RequireComponent(typeof(PlayerInputHandler))]
     public class PlayerWeaponsManager : MonoBehaviour
     {
+
         public enum WeaponSwitchState
         {
             Up,
@@ -75,7 +77,7 @@ namespace Unity.FPS.Gameplay
 
         public bool IsAiming { get; private set; }
         public bool IsPointingAtEnemy { get; private set; }
-        public int ActiveWeaponIndex { get; private set; }
+        public int ActiveWeaponIndex { get; set; }
 
         public UnityAction<WeaponController> OnSwitchedToWeapon;
         public UnityAction<WeaponController, int> OnAddedWeapon;
@@ -92,7 +94,8 @@ namespace Unity.FPS.Gameplay
         Vector3 m_AccumulatedRecoil;
         float m_TimeStartedWeaponSwitch;
         WeaponSwitchState m_WeaponSwitchState;
-        int m_WeaponSwitchNewWeaponIndex;
+        public int m_WeaponSwitchNewWeaponIndex;
+       
 
         void Start()
         {
@@ -118,8 +121,9 @@ namespace Unity.FPS.Gameplay
             }
 
             SwitchWeapon(true);
+            //supActor = GetComponent<SuperActor>();
         }
-
+        public bool inputDown = false,  inputHeld= false,  inputUp= false;
         void Update()
         {
             // shoot handling
@@ -140,24 +144,25 @@ namespace Unity.FPS.Gameplay
                 IsAiming = m_InputHandler.GetAimInputHeld();
 
                 // handle shooting
-                bool hasFired = activeWeapon.HandleShootInputs(
-                    m_InputHandler.GetFireInputDown(),
-                    m_InputHandler.GetFireInputHeld(),
-                    m_InputHandler.GetFireInputReleased());
-
-                // Handle accumulating recoil
-                if (hasFired)
-                {
-                    m_AccumulatedRecoil += Vector3.back * activeWeapon.RecoilForce;
-                    m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, MaxRecoilDistance);
-                }
+                    bool hasFired = activeWeapon.HandleShootInputs(
+                        inputDown,
+                        inputHeld,
+                        inputUp);
+                    // Handle accumulating recoil
+                    if (hasFired)
+                    {
+                        m_AccumulatedRecoil += Vector3.back * activeWeapon.RecoilForce;
+                        m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, MaxRecoilDistance);
+                    }
+                
             }
 
             // weapon switch handling
             if (!IsAiming &&
                 (activeWeapon == null || !activeWeapon.IsCharging) &&
-                (m_WeaponSwitchState == WeaponSwitchState.Up || m_WeaponSwitchState == WeaponSwitchState.Down))
+                (m_WeaponSwitchState == WeaponSwitchState.Up || m_WeaponSwitchState == WeaponSwitchState.Down)&& m_InputHandler.isLocalPlayer)
             {
+                
                 int switchWeaponInput = m_InputHandler.GetSwitchWeaponInput();
                 if (switchWeaponInput != 0)
                 {
@@ -454,9 +459,13 @@ namespace Unity.FPS.Gameplay
                     int layerIndex =
                         Mathf.RoundToInt(Mathf.Log(FpsWeaponLayer.value,
                             2)); // This function converts a layermask to a layer index
+                    if(!m_InputHandler.isLocalPlayer){
+                        layerIndex = 0;
+                    }
                     foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
                     {
-                        t.gameObject.layer = layerIndex;
+                            
+                            t.gameObject.layer = layerIndex;
                     }
 
                     m_WeaponSlots[i] = weaponInstance;

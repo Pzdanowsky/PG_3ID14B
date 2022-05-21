@@ -10,7 +10,7 @@ namespace Unity.FPS.UI
         [Tooltip("Image component dispplaying current health")]
         public Image HealthFillImage;
 
-        Health m_PlayerHealth;
+        public Health m_PlayerHealth = null;
 
         void Start()
         {
@@ -19,13 +19,12 @@ namespace Unity.FPS.UI
             DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, PlayerHealthBar>(
                 playerCharacterController, this);
 
-            m_PlayerHealth = playerCharacterController.GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, PlayerHealthBar>(m_PlayerHealth, this,
-                playerCharacterController.gameObject);
+           
         }
 
         void Update()
         {
+            if(m_PlayerHealth == null)return;
             // update health bar value
             HealthFillImage.fillAmount = m_PlayerHealth.CurrentHealth / m_PlayerHealth.MaxHealth;
         }

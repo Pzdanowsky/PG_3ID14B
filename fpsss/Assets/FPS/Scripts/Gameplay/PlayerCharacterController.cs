@@ -1,10 +1,10 @@
-﻿using Unity.FPS.Game;
+﻿
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Unity.FPS.Gameplay
 {
-    [RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler), typeof(AudioSource))]
+    //[RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler), typeof(AudioSource))]
     public class PlayerCharacterController : MonoBehaviour
     {
         [Header("References")] [Tooltip("Reference to the main camera used for the player")]
@@ -117,11 +117,11 @@ namespace Unity.FPS.Gameplay
             }
         }
 
-        Health m_Health;
+        Unity.FPS.Game.Health m_Health;
         PlayerInputHandler m_InputHandler;
         CharacterController m_Controller;
         PlayerWeaponsManager m_WeaponsManager;
-        Actor m_Actor;
+        Unity.FPS.Game.Actor m_Actor;
         Vector3 m_GroundNormal;
         Vector3 m_CharacterVelocity;
         Vector3 m_LatestImpactSpeed;
@@ -133,9 +133,11 @@ namespace Unity.FPS.Gameplay
         const float k_JumpGroundingPreventionTime = 0.2f;
         const float k_GroundCheckDistanceInAir = 0.07f;
 
+        public Vector3 spawnPoint;
+
         void Awake()
         {
-            ActorsManager actorsManager = FindObjectOfType<ActorsManager>();
+            Unity.FPS.Game.ActorsManager actorsManager = FindObjectOfType<Unity.FPS.Game.ActorsManager>();
             if (actorsManager != null)
                 actorsManager.SetPlayer(gameObject);
         }
@@ -144,34 +146,41 @@ namespace Unity.FPS.Gameplay
         {
             // fetch components on the same gameObject
             m_Controller = GetComponent<CharacterController>();
-            DebugUtility.HandleErrorIfNullGetComponent<CharacterController, PlayerCharacterController>(m_Controller,
+            Unity.FPS.Game.DebugUtility.HandleErrorIfNullGetComponent<CharacterController, PlayerCharacterController>(m_Controller,
                 this, gameObject);
 
             m_InputHandler = GetComponent<PlayerInputHandler>();
-            DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, PlayerCharacterController>(m_InputHandler,
+            Unity.FPS.Game.DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, PlayerCharacterController>(m_InputHandler,
                 this, gameObject);
 
             m_WeaponsManager = GetComponent<PlayerWeaponsManager>();
-            DebugUtility.HandleErrorIfNullGetComponent<PlayerWeaponsManager, PlayerCharacterController>(
+            Unity.FPS.Game.DebugUtility.HandleErrorIfNullGetComponent<PlayerWeaponsManager, PlayerCharacterController>(
                 m_WeaponsManager, this, gameObject);
 
-            m_Health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, PlayerCharacterController>(m_Health, this, gameObject);
+            m_Health = GetComponent<Unity.FPS.Game.Health>();
+            Unity.FPS.Game.DebugUtility.HandleErrorIfNullGetComponent<Unity.FPS.Game.Health, PlayerCharacterController>(m_Health, this, gameObject);
 
-            m_Actor = GetComponent<Actor>();
-            DebugUtility.HandleErrorIfNullGetComponent<Actor, PlayerCharacterController>(m_Actor, this, gameObject);
+            m_Actor = GetComponent<Unity.FPS.Game.Actor>();
+            Unity.FPS.Game.DebugUtility.HandleErrorIfNullGetComponent<Unity.FPS.Game.Actor, PlayerCharacterController>(m_Actor, this, gameObject);
 
             m_Controller.enableOverlapRecovery = true;
 
             m_Health.OnDie += OnDie;
 
+            //Wybor i szukanie spawnPointa
+            spawnPoint = new Vector3(0,0,0);
+            
+            
+
             // force the crouch state to false when starting
             SetCrouchingState(false, true);
             UpdateCharacterHeight(true);
+            Spawn();
         }
 
         void Update()
         {
+            if(!m_InputHandler.isLocalPlayer)return;
             // check for Y kill
             if (!IsDead && transform.position.y < KillHeight)
             {
@@ -205,6 +214,8 @@ namespace Unity.FPS.Gameplay
                 }
             }
 
+
+
             // crouching
             if (m_InputHandler.GetCrouchInputDown())
             {
@@ -214,6 +225,27 @@ namespace Unity.FPS.Gameplay
             UpdateCharacterHeight(false);
 
             HandleCharacterMovement();
+
+            Spawn();
+        }
+        public bool respawn = true;
+        void Spawn(){
+            if(m_InputHandler.isLocalPlayer){
+                if(m_Health.CurrentHealth > 0 && !respawn)return;
+            //if(!respawn)return;
+            
+                IsDead = false;
+            
+                if((spawnPoint-transform.position).magnitude < 0.5f){
+                    m_Health.Respawn();
+                    respawn = false;
+                }
+                m_CharacterVelocity = new Vector3(0,0,0);
+                transform.position = spawnPoint;
+                
+            }
+            Debug.Log("Respawned !!!");
+
         }
 
         void OnDie()
@@ -221,9 +253,10 @@ namespace Unity.FPS.Gameplay
             IsDead = true;
 
             // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
-            m_WeaponsManager.SwitchToWeaponIndex(-1, true);
-
-            EventManager.Broadcast(Events.PlayerDeathEvent);
+           // m_WeaponsManager.SwitchToWeaponIndex(-1, true);
+           respawn = true;
+            
+            //EventManager.Broadcast(Events.PlayerDeathEvent);
         }
 
         void GroundCheck()

@@ -24,6 +24,8 @@ namespace Unity.FPS.Gameplay
         PlayerCharacterController m_PlayerCharacterController;
         bool m_FireInputWasHeld;
 
+        public bool isLocalPlayer = false; 
+
         void Start()
         {
             m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
@@ -43,7 +45,8 @@ namespace Unity.FPS.Gameplay
 
         public bool CanProcessInput()
         {
-            return Cursor.lockState == CursorLockMode.Locked && !m_GameFlowManager.GameIsEnding;
+            bool b = !m_GameFlowManager.GameIsEnding;
+            return Cursor.lockState == CursorLockMode.Locked && b;
         }
 
         public Vector3 GetMoveInput()

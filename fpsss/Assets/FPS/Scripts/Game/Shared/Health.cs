@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+
 namespace Unity.FPS.Game
 {
     public class Health : MonoBehaviour
@@ -14,7 +15,7 @@ namespace Unity.FPS.Game
         public UnityAction<float> OnHealed;
         public UnityAction OnDie;
 
-        public float CurrentHealth { get; set; }
+        public float CurrentHealth = 10.0f;
         public bool Invincible { get; set; }
         public bool CanPickup() => CurrentHealth < MaxHealth;
 
@@ -28,8 +29,14 @@ namespace Unity.FPS.Game
             CurrentHealth = MaxHealth;
         }
 
+        public void Respawn(){
+            m_IsDead = false;
+            CurrentHealth = MaxHealth;
+        }
+
         public void Heal(float healAmount)
         {
+            
             float healthBefore = CurrentHealth;
             CurrentHealth += healAmount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
@@ -66,8 +73,8 @@ namespace Unity.FPS.Game
             CurrentHealth = 0f;
 
             // call OnDamage action
-            OnDamaged?.Invoke(MaxHealth, null);
-
+            //OnDamaged?.Invoke(MaxHealth, null);
+            CurrentHealth = 0f;
             HandleDeath();
         }
 
