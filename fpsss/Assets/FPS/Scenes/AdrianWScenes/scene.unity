@@ -3183,31 +3183,110 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
+      propertyPath: playerClass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
       propertyPath: StartingWeaponsDawid.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: StartingWeaponsKamil.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: StartingWeaponsDawid.Array.data[0]
       value: 
-      objectReference: {fileID: 8323776800172828795, guid: 3439b4874b7b44e4eb2216314c46b85c,
+      objectReference: {fileID: 9057874287773316624, guid: cb74c7acef78c7e438b76f32c5756b8f,
         type: 3}
     - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: StartingWeaponsDawid.Array.data[1]
       value: 
-      objectReference: {fileID: 8323776800172828795, guid: b318fabc73446b746a1005cede0c4ceb,
+      objectReference: {fileID: 9057874287773316624, guid: 0836b9838ab1ddc448ee3a29596a0f23,
         type: 3}
     - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: StartingWeaponsKamil.Array.data[0]
       value: 
-      objectReference: {fileID: 8323776800172828795, guid: 31d97e822763d1f4cb769f7e3f7f7333,
+      objectReference: {fileID: -2157777282195687114, guid: ac42e3ca5ddc7cb46b21c1657d9f33d1,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsKamil.Array.data[1]
+      value: 
+      objectReference: {fileID: -2157777282195687114, guid: f35bbdc6a1dcb024291af4800f3ce22e,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsWiktoria.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsMgrInzPieta.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsWiktoria.Array.data[0]
+      value: 
+      objectReference: {fileID: -2157777282195687114, guid: f6f0834639832464aa143b68d5df1659,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsWiktoria.Array.data[1]
+      value: 
+      objectReference: {fileID: 9057874287773316624, guid: eba86f4598cce534a860021744d82fe4,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsDrInzLukawski.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsMgrInzSydoryk.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsMgrInzPieta.Array.data[0]
+      value: 
+      objectReference: {fileID: -2157777282195687114, guid: 4aa6428902c890243986cfc686a8d01d,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsMgrInzPieta.Array.data[1]
+      value: 
+      objectReference: {fileID: -2157777282195687114, guid: 8059ebcae439a8c49b8c667a4804138a,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsDrInzLukawski.Array.data[0]
+      value: 
+      objectReference: {fileID: -2157777282195687114, guid: de7df5306dbe11c469eeb73e5e1d39ae,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsDrInzLukawski.Array.data[1]
+      value: 
+      objectReference: {fileID: 9057874287773316624, guid: e19324321531fa945bb35d121c11aad2,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsMgrInzSydoryk.Array.data[0]
+      value: 
+      objectReference: {fileID: -2157777282195687114, guid: d4104621616feeb46871f14a91ebf35a,
+        type: 3}
+    - target: {fileID: 298744117520805562, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: StartingWeaponsMgrInzSydoryk.Array.data[1]
+      value: 
+      objectReference: {fileID: 9057874287773316624, guid: 407bab973d0220848a31b94c852a709c,
         type: 3}
     - target: {fileID: 814417836257332542, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
