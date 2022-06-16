@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/FPS/Scenes/LoseScene.unity
     guid: 72e5c65a45893714484002914e3fd521
+  - enabled: 1
+    path: Assets/FPS/Scenes/AdrianWScenes/CharacterMenu.unity
+    guid: 1fa55cc5966209347ad119bdf689d1bd
   m_configObjects: {}
